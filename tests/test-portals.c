@@ -402,6 +402,17 @@ global_teardown (void)
    }
 #endif
 
+#ifdef HAVE_RTKIT
+#define check_rtkit(name)
+#else
+#define check_rtkit(name) \
+ if (strcmp (name , "realtime") == 0) \
+   { \
+     g_test_skip ("Skipping tests that require rtkit"); \
+     return; \
+   }
+#endif
+
 /* Just check that the portal is there, and has the
  * expected version. This will fail if the backend
  * is not found.
@@ -416,6 +427,7 @@ test_##pp##_exists (void) \
  \
  check_pipewire ( #pp ) \
  check_geoclue ( #pp ) \
+ check_rtkit ( #pp ) \
  \
   proxy = G_DBUS_PROXY (xdp_dbus_##pp##_proxy_new_sync (session_bus, \
                                                         0, \
