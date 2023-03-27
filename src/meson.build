@@ -69,7 +69,6 @@ xdg_desktop_portal_sources = files(
   'power-profile-monitor.c',
   'print.c',
   'proxy-resolver.c',
-  'realtime.c',
   'request.c',
   'screenshot.c',
   'secret.c',
@@ -104,6 +103,12 @@ if have_geoclue
   )
 endif
 
+if have_rtkit
+  xdg_desktop_portal_sources += files(
+    'realtime.c',
+  )
+endif
+
 if have_libsystemd
   xdg_desktop_portal_sources += sd_escape_sources
 endif
@@ -117,6 +122,7 @@ common_deps = [
 
 xdg_desktop_portal_deps = common_deps + [
   geoclue_dep,
+  rtkit_dep,
   pipewire_dep,
   libsystemd_dep,
 ]
