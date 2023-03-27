@@ -18,7 +18,7 @@ option('geoclue',
        type: 'feature',
        value: 'auto',
        description: 'Enable Geoclue support. Needed for location portal')
-option('realtime',
+option('rtkit',
        type: 'feature',
        value: 'auto',
        description: 'Enable RtKit support. Needed for realtime portal')
