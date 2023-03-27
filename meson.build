@@ -106,6 +106,8 @@ gdk_pixbuf_dep = dependency('gdk-pixbuf-2.0')
 geoclue_dep = dependency('libgeoclue-2.0',
                          version: '>= 2.5.2',
                          required: get_option('geoclue'))
+rtkit_dep = dependency('rtkit',
+                           required: get_option('rtkit'))
 libportal_dep = dependency('libportal',
                            required: get_option('libportal'))
 pipewire_dep = dependency('libpipewire-0.3',
@@ -126,6 +128,11 @@ endif
 
 if glib_dep.version().version_compare('>= 2.66')
   config_h.set('HAVE_GLIB_2_66', 1)
+endif
+
+have_rtkit = rtkit_dep.found()
+if have_rtkit
+  config_h.set('HAVE_RTKIT', 1)
 endif
 
 have_libportal = libportal_dep.found()
@@ -167,6 +174,7 @@ summary({
     'Enable pipewire support': have_pipewire,
     'Enable libsystemd support': have_libsystemd,
     'Enable geoclue support': have_geoclue,
+    'Enable rtkit support': have_rtkit,
     'Enable libportal support': have_libportal,
     'Enable installed tests:': enable_installed_tests,
   },
